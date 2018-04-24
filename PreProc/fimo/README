@@ -1,0 +1,19 @@
+
+To get fasta file for SNPs, you need
+
+1. BedTools (install)
+    http://bedtools.readthedocs.io/en/latest/
+
+2. Human Genome (hg19) (./0_download.sh)
+    http://hgdownload.cse.ucsc.edu/goldenPath/hg19/chromosomes/
+
+
+FIMO scripts depends on
+
+1. MEME suite (install)
+    http://meme-suite.org/
+
+2. HOCOMOCO database v11 (./0_download.sh)
+    http://hocomoco11.autosome.ru/downloads_v11/
+
+

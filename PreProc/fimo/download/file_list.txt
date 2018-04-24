@@ -1,0 +1,2 @@
+http://hocomoco11.autosome.ru/downloads_v11/
+http://hgdownload.cse.ucsc.edu/goldenPath/hg19/chromosomes/
