@@ -76,8 +76,6 @@ for i in range(10,23,1):
     snp_split[ "chr%d" % i ] = 2 # set 3
 
 for k, v in snp_df.iterrows():
-    if v['class'] != 'RA':
-        continue
     chrom = v['#chr']
     pos = v['pos1']
     gwas = v['gwas_snp']
