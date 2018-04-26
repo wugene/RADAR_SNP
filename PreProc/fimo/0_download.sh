@@ -1,4 +1,5 @@
 
+mkdir download
 cd download
 
 URL="http://hocomoco11.autosome.ru/final_bundle/hocomoco11/full/HUMAN/mono/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme"

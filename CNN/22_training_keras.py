@@ -45,39 +45,37 @@ def make_model():
 
     model.add(Conv2D(
         20, kernel_size=(1, n_feature), input_shape=(n_snp, n_feature, 1),
-        activation='relu'
+        activation='sigmoid'
     ))
     model.add(Dropout(0.1))
     model.add(Reshape((n_snp,20,1)))
 
     model.add(Conv2D(
         100, kernel_size=(1, 20),
-        activation='relu'
+        activation='sigmoid'
     ))
     model.add(Dropout(0.8))
     model.add(Reshape((n_snp,100,1)))
 
     model.add(Conv2D(
         20, kernel_size=(1, 100),
-        activation='relu'
+        activation='sigmoid'
     ))
     model.add(Dropout(0.1))
     model.add(Reshape((n_snp,20,1)))
 
     model.add(Conv2D(
         1, kernel_size=(1, 20),
-        activation='relu',
+        activation='sigmoid',
         name='snps'
     ))
     model.add(MaxPooling2D(pool_size=(n_snp,1)))
 
     model.add(Flatten())
-    model.add(Activation(activation='relu'))
-
     model.summary()
 
 
-    optimizer=keras.optimizers.Nadam(lr=0.0001)
+    optimizer=keras.optimizers.Nadam(lr=0.0005)
     model.compile(
         loss='mean_squared_error', optimizer=optimizer,
         metrics=['acc']
@@ -102,8 +100,6 @@ pred_model = Model(inputs=model.input,
                   outputs=model.get_layer('snps').output)
 
 pred_snp = pred_model.predict(X_pr)
-
-
 
 
 # save prediction values

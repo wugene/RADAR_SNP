@@ -1,0 +1,9 @@
+LD extension requires 1000 Genome vcf file
+    Need to install 'tabix'
+    Please refer to the link
+    http://www.internationalgenome.org/category/tabix/
+
+LD extension is based on r-square value
+    Need to install Tensorflow/Python
+    Please refer to the link
+    https://www.tensorflow.org/install/
