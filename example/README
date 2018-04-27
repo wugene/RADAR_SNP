@@ -1,7 +1,0 @@
-
-Example GWAS association file was downloaded from 
-GWAS catalog web site (https://www.ebi.ac.uk/gwas/)
-
-snp_list_breast_cancer.bed file was created by
-    bash script (./gwas_tsv_to_bed.sh)
-    with input file downloaded association result with pvalue < 5E-8
