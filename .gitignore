@@ -1,6 +1,7 @@
 CNN/PKL/
 CNN/PRED/
 CNN/SNP/
+CNN/DB
 CNN/__pycache__/
 PreProc/dhs/DB/
 PreProc/dhs/download/
