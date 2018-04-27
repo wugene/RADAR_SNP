@@ -14,16 +14,16 @@ mkdir SNP
 cat $FN \
 | awk '
   {
-    print $1 "\t" $2-100 "\t" $3+100;
-  }' \
-| sort -u > SNP/snp_list.bed
+    print $1 "\t" $2-100 "\t" $3+100 > "SNP/snp_" $1 ".fa.bed";
+  }'
 
 cd SNP
 
 for F in `ls ../download/chr*.fa`
 do
-  SNP_F=snp_list.$(basename -- "$F")
-  echo bedtools getfasta -fi $F -bed snp_list.bed -fo snp_list.$SNP_F \
+  SNP_IN=snp_$(basename "$F").bed
+  FA_OUT=snp_list.$(basename "$F")
+  echo bedtools getfasta -fi $F -bed $SNP_IN -fo $FA_OUT \
   | tee /dev/stderr
 done | parallel -j 40
 

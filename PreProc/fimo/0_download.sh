@@ -11,7 +11,7 @@ do
   FN="chr$CHROM.fa"
   if [ -f "$FN" ]
   then
-    echo "$FN found."
+    echo "$FN found." > /dev/stderr
     continue
   fi
 

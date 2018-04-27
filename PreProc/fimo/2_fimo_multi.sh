@@ -5,7 +5,7 @@ for F in `ls SNP/snp*.fa`
 do
   echo "fimo -text -parse-genomic-coord -thresh 3e-4 $MOTIF $F > $F.fimo" \
   | tee /dev/stderr
-done #| parallel -j 22
+done | parallel -j 22
 
 
 cd SNP

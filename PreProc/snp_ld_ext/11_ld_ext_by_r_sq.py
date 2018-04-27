@@ -2,8 +2,10 @@
 
 import sys
 import numpy as np
-import tensorflow as tf
+#import tensorflow as tf
 
+AF_cutoff=0.005
+AF_cutoff_r=1-AF_cutoff
 
 
 def make_numpy_for_rsqaure(gwas, pos):
@@ -17,7 +19,23 @@ def make_numpy_for_rsqaure(gwas, pos):
     with open(fn) as f:
         gwas_arr = list()
         for line in f:
-            x = line.split(sep='\t')
+            x = line.strip().split(sep='\t')
+            desc_line = x[7]
+            vt_chr = desc_line.split(sep=';')[-1]
+            if (vt_chr != 'VT=SNP') and (vt_chr !="VT=INDEL"):
+                continue
+
+            af_chr = desc_line.split(sep=';')[1]
+            AF = float(af_chr.split(sep='=')[1])
+            #example 1 217020574 rs7529226 T C 100 PASS AC=191;AF=0.038139;AN=5......
+
+            if ( AF<AF_cutoff ):
+                continue
+
+            if ( AF>AF_cutoff_r):
+                continue
+
+
             snp_arr = np.array([ x.split(sep='|') for x in x[9:] ], dtype=float).flatten()
             index_l.append( (x[0], x[1]) )
             numpy_l.append( snp_arr )
@@ -35,29 +53,23 @@ def make_numpy_for_rsqaure(gwas, pos):
 
 def r_square_top_k(X, y, k):
 
-    x_tf = tf.placeholder('float32', (None,None))
-    y_tf = tf.placeholder('float32', (1,None))
+    X_bar = np.mean(X, axis=1, keepdims=True)
+    y_bar = np.mean(y)
 
-    x_bar = tf.reduce_mean(x_tf, axis=1, keepdims=True)
-    y_bar = tf.reduce_mean(y_tf, axis=1, keepdims=True)
+    X_2 = X - X_bar
+    y_2 = y - y_bar
 
-    x_2 = x_tf - x_bar
-    y_2 = y_tf - y_bar
+    X_SS = np.sum((X_2 * X_2), axis=1 )
+    y_SS = np.sum((y_2 * y_2))
 
-    x_SS = tf.reduce_sum((x_2 * x_2), axis=1, keepdims=True)
-    y_SS = tf.reduce_sum((y_2 * y_2), axis=1, keepdims=True)
+    Xy_sum = np.sum( X * y, axis=1 )
 
-    xy_sum = tf.matmul(x_2, y_2, transpose_b=True)
+    r2 = (Xy_sum * Xy_sum / X_SS) / y_SS
+    #print( np.min(X_SS), r2, file=sys.stderr)
 
-    r2_tf = xy_sum * xy_sum / x_SS / tf.transpose(y_SS)
+    idx = np.argsort(r2)[-k:][::-1]
+    return r2[ idx ], idx
 
-    val_idx_tf = tf.nn.top_k( tf.reshape(r2_tf, [-1, ]), k=k )
-
-    with tf.Session() as sess:
-        Y = y.reshape(1,-1)
-        val_idx = sess.run( val_idx_tf, feed_dict={x_tf: X, y_tf: Y})
-
-    return val_idx
 
 
 def main():
@@ -74,8 +86,8 @@ def main():
     if (len(y)==0):
         return
             
-    res = r_square_top_k(np.array(X), y, 30)
-    top_list_r85 = res.indices[ res.values > 0.85 ]
+    val, idx = r_square_top_k(np.array(X), y, 30)
+    top_list_r85 = idx[ val > 0.85 ]
     if (len(top_list_r85)<4):
         return
         

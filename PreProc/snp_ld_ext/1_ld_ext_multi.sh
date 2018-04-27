@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-
 if [ $# -lt 1 ]
 then
   echo "No argument"
@@ -11,11 +9,13 @@ fi
 FN=$1
 
 
-NUM_GPU=`nvidia-smi -L | wc -l`
-NUM_JOB=$NUM_GPU
-if [ $NUM_JOB -lt 1 ]
-then
-  $NUM_JOB=`cat /proc/cpuinfo | grep "^processor" | wc -l`
+NUM_GPU=0
+#NUM_GPU=`nvidia-smi -L | wc -l`
+#NUM_JOB=$NUM_GPU
+#if [ $NUM_JOB -lt 1 ]
+#then
+NUM_JOB=`cat /proc/cpuinfo | grep "^processor" | wc -l`
+#fi
 
 
 echo -e "#chr\tpos1\tpos2\tgwas_snp"

@@ -1,6 +1,6 @@
 #!/bin/bash
 NUM_OF_GPU=8
-NUM_OF_ITERATION=3
+NUM_OF_ITERATION=12
 #NUM_OF_GPU * NUM_OF_ITERATION should be multiple of 6 
 
 MAX_ID_GPU=$(($NUM_OF_GPU-1))
@@ -25,7 +25,7 @@ cat PRED/predict.* \
 | awk '
   {
     key=$1 "\t" $2;
-    sum[key]+=$3;
+    sum[key]+=int($3+0.5);
     count[key]++;
   }
   END{

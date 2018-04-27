@@ -75,7 +75,7 @@ def make_model():
     model.summary()
 
 
-    optimizer=keras.optimizers.Nadam(lr=0.0005)
+    optimizer=keras.optimizers.Nadam(lr=0.0003)
     model.compile(
         loss='mean_squared_error', optimizer=optimizer,
         metrics=['acc']
@@ -84,7 +84,7 @@ def make_model():
 
 
 model = make_model()
-earlystop = keras.callbacks.EarlyStopping()
+earlystop = keras.callbacks.EarlyStopping(patience=2, verbose=1)
 
 history = model.fit(
     X_tr, Y_tr, batch_size=100, epochs=10,
