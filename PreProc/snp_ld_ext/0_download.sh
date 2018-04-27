@@ -23,7 +23,10 @@ done | parallel -j 22
 cat $SNP_FILE \
 | awk -v F1="$FILE1" -v F2="$FILE2" '
   {
-    print "tabix", F1 $1 F2, substr($1,4) ":" $2-200000 "-" $3+200000, ">", "1kg." $4 ".vcf";
+    min = $2-200000;
+    if (min < 0) min=0;
+    max = $2+200000;
+    print "tabix", F1 $1 F2, substr($1,4) ":" min "-" max, ">", "1kg." $4 ".vcf";
   }
 ' \
 | tee /dev/stderr \

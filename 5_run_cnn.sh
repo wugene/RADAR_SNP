@@ -19,5 +19,9 @@ cd CNN
 rm -f DB
 ln -s ../$DB_DIR .
 
-#./1_make_pkl.sh ../$LD_SNP
+./1_make_pkl.sh ../$LD_SNP
 ./2_train_predict.sh
+
+cd ..
+mv CNN/PRED/ $DIR_N/Prediction_result
+echo "Prediction results are saved to $DIR_N/Prediction_result"
