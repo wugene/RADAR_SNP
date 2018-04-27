@@ -57,3 +57,11 @@ echo "Run CNN"
 echo "All_LD_snp.bed and DB directory should be in the DIRECTORY"
 ./5_run_cnn.sh BreastCancer
 echo "Creating Prediction_result/ in the DIRECTORY"
+
+
+echo "All_LD_snp.bed is already in RA"
+./2_preproc_commonDB.sh
+./3_preproc_fimo.sh   RA
+./4_preproc_linkDB.sh RA
+./5_run_cnn.sh        RA
+
