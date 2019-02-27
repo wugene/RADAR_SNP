@@ -9,8 +9,8 @@ echo "creating gwas-association-downloaded.tsv.hg19.bed"
 echo "LD extension with 1000 genome and r-square value"
 echo "This takes long time to download 1000 genome data !!"
 echo "skip if you already have snp list with LD extended"
-./1_preproc_LD_ext.sh gwas-association-downloaded.tsv.hg19.bed
-echo "creating BreastCancer/All_LD_snp.bed"
+./1_preproc_LD_ext.sh BreastCancer/gwas-association-downloaded.tsv.hg19.bed
+echo "creating All_LD_snp.bed"
 
 
 echo "Download pre-processed files"
