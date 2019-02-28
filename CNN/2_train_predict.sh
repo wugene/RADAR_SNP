@@ -1,6 +1,6 @@
 #!/bin/bash
-NUM_OF_GPU=8
-NUM_OF_ITERATION=12
+NUM_OF_GPU=1
+NUM_OF_ITERATION=100
 #NUM_OF_GPU * NUM_OF_ITERATION should be multiple of 6 
 
 MAX_ID_GPU=$(($NUM_OF_GPU-1))
@@ -14,9 +14,8 @@ do
   for j in `seq 0 $MAX_ID_GPU`
   do
     seq_no=$(($i*8+$j))
-    echo CUDA_VISIBLE_DEVICES=$j python 22_training_keras.py $seq_no 1>&2
     echo CUDA_VISIBLE_DEVICES=$j python 22_training_keras.py $seq_no
-  done | parallel -j 8
+  done | tee /dev/stderr | parallel -j $NUM_OF_GPU
 done
 
 
