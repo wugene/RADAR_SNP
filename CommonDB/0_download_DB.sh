@@ -7,7 +7,7 @@ do
 done
 
 cat file_list.tsv \
-| awk '{print "wget -nc", $1, "-O", $2}' \
+| awk '{print "wget -N", $1, "-O", $2}' \
 | tee /dev/stderr \
 | parallel -j 20
 
